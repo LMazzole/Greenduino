@@ -1,3 +1,6 @@
+/*
+http://www.instructables.com/id/Easiest-Arduino-Smart-Plant-Watering/
+*/
 #define MYDEBUG
 #include <Arduino.h>
 #include "debug.h"
@@ -5,7 +8,6 @@
 
 void setup() {
     // put your setup code here, to run once:
-
     // declare relay as output
     pinMode(relay1, OUTPUT);
     pinMode(relay2, OUTPUT);
@@ -30,21 +32,30 @@ void loop() {
      // and open the switch for that specific plant
 
      if(moisture1_value<=450){
+      DEBUG_PRINT("Sensor moisture1: ");
+      DEBUG_PRINTLN(moisture1_value);
       digitalWrite(relay1, HIGH);
      }
      if(moisture2_value<=450){
-      digitalWrite(relay2, HIGH);
+       DEBUG_PRINT("Sensor moisture2: ");
+       DEBUG_PRINTLN(moisture1_value);
+       digitalWrite(relay2, HIGH);
      }
      if(moisture3_value<=450){
-      digitalWrite(relay3, HIGH);
+       DEBUG_PRINT("Sensor moisture3: ");
+       DEBUG_PRINTLN(moisture1_value);
+       digitalWrite(relay3, HIGH);
      }
      if(moisture4_value<=450){
-      digitalWrite(relay4, HIGH);
+       DEBUG_PRINT("Sensor moisture4: ");
+       DEBUG_PRINTLN(moisture1_value);
+       digitalWrite(relay4, HIGH);
      }
 
      // make sure there is at least one plant that needs water
      // if there is, open the motor
      if(moisture1_value<=450 || moisture2_value<=450 || moisture3_value<=450 || moisture4_value<=450){
+       DEBUG_PRINTLN("Start Pumpe");
        digitalWrite(pump, HIGH);
      }
 
@@ -52,14 +63,17 @@ void loop() {
      delay(5000);
 
      // turn the pump off
+      DEBUG_PRINTLN("Stop Pumpe");
      digitalWrite(pump, LOW);
 
      // go each switch and turn them off
+      DEBUG_PRINTLN("Stop Relais");
      digitalWrite(relay1, LOW);
      digitalWrite(relay2, LOW);
      digitalWrite(relay3, LOW);
      digitalWrite(relay4, LOW);
 
      // wait 5 minutes and repeat the process
-     delay(300000);
+     DEBUG_PRINTLN("Wait 5min");
+     delay(5*60*60);
 }
